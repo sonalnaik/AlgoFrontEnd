@@ -1,0 +1,14 @@
+{
+"/api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/shop": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/sub-user": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}

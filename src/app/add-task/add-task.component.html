@@ -1,0 +1,36 @@
+<app-left-panel></app-left-panel>
+
+<div class="main">
+  <h3 class="heading">Add New Task</h3>
+  
+
+<!-- main app container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form [formGroup]="addSubUserForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label> Task Name</label>
+                        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors && f.name.dirty" class="invalid-feedback">
+                            <div class="err-msg" *ngIf="f.name.errors.required">Task name is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                        <div *ngIf="submitted && f.description.errors && f.name.dirty" class="invalid-feedback">
+                            <div class="err-msg" *ngIf="f.description.errors.required">Description is required</div>
+                           </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <p-toast></p-toast>

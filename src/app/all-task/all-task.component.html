@@ -1,0 +1,84 @@
+<app-left-panel></app-left-panel>
+
+<div class="main">
+  <h3 class="heading">All Tasks</h3>
+   <p-table [columns]="cols" [value]="shops">
+    <ng-template pTemplate="header" let-columns>
+            <tr>
+            <th style="width:10em">
+                 <button class="btn btn-primary"  (click)="addTask()">Add Task</button>
+            </th>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+         
+        <tr>
+            <td>
+                <button (click)="showDetail(rowData)"><img style="height: 23px;
+                    width: 25px" src="./assets/magnify.png"></button>
+                <button   (click)="showTaskDialog(rowData)"><img style="height: 23px;
+                    width: 25px" src="./assets/edit.png"></button>
+                <button  (click)="deleteTask(rowData)"><img style="height: 23px;
+                    width: 25px" src="./assets/delete.png"></button>
+        </td>
+
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>  
+
+<p-dialog header="Update Task" [(visible)]="displayTask" [style]="{width: '50vw'}">
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <form [formGroup]="TaskForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <label> Task Name</label>
+                                <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div class="err-msg" *ngIf="f.name.errors.required">Task name is required</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                    <div class="err-msg" *ngIf="f.description.errors.required">Description is required</div>
+                                   </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+</p-dialog>
+    
+
+<p-dialog *ngIf="display" header="{{row.name}} Details" [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" 
+ [baseZIndex]="10000">
+    <div class="form-group" style="display:flex">
+        <label> Task Name:</label>
+        <div class="popupData">  {{row.name}}</div>
+    </div>
+    <div class="form-group" style="display:flex">
+        <label> Description:</label>
+        <div class="popupData">  {{row.description}}</div>
+    </div>
+    
+</p-dialog>
+
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle">
+    
+</p-confirmDialog>
+<p-toast></p-toast>
